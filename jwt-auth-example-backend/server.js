@@ -45,3 +45,16 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
+// Example protected route
+app.get('/protected', authenticateToken, (req, res) => {
+  res.json({
+    user: req.user,
+    message: 'Protected route accessed successfully',
+  });
+});
+
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
