@@ -31,3 +31,17 @@ app.post('/login', (req, res) => {
     res.status(401).json({ error: 'Invalid credentials' });
   }
 });
+
+// Middleware to authenticate JWT token
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token === null || token === undefined)
+    res.status(401).json({ error: 'Token not present' });
+
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
