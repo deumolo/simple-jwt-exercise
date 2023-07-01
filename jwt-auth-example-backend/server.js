@@ -10,8 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 // Fake user data for demonstration purposes
 const users = [
-  { id: 1, username: 'user1', password: 'password1' },
-  { id: 2, username: 'user2', password: 'password2' },
+  { id: 1, username: 'user1', password: 'pass1' },
+  { id: 2, username: 'user2', password: 'pass2' },
 ];
 
 // Route for user login and JWT generation
