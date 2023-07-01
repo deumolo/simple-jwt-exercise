@@ -41,7 +41,8 @@ function authenticateToken(req, res, next) {
     res.status(401).json({ error: 'Token not included' });
 
   jwt.verify(token, secretKey, (err, user) => {
-    if (err) res.sendStatus(403);
+    if (err) 
+      res.status(403).json({ error: 'Token not valid' });
     req.user = user;
     next();
   });
