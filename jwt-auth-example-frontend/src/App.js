@@ -10,8 +10,8 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    token ? setToken(token) : setToken(null);
-  }, [token]);
+    token && setToken(token);
+  }, []);
 
   const loginHandler = async () => {
     try {
