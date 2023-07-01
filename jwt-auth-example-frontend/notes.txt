@@ -1,0 +1,70 @@
+1.- Para hacer llamadas a un servidor se recomienda el plugin axios, instalado de la siguiente manera:
+npm install axios
+
+2.- Para mejor lectura en las rutas de la api definimos una constante con la direccion principal:
+const apiUrl = 'http://localhost:5000';
+
+3.- Dentro del componente donde se utilizarán las 3 variables de estado principales creamos las 3 estructuras:
+  const [token, setToken] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+
+4.- Creamos un handler para la función login donde con un try/cath hacemos la llamada a la api con axios:
+
+  const loginHandler = async () => {
+    try {
+      const response = await axios.post(apiUrl + '/login', {
+        username,
+        password,
+      });
+
+      const { token } = response.data;
+      setToken(token);
+      localStorage.setItem('token', token);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+Esta llamada post llevará un post body con nuestro usuario y password.
+
+Si esta llamada se ejecuta correctamente, podemos almacenar nuestro jwt en localstorage o solo memoria temporal.
+
+En caso de devolver un error se puede imprimir o manejar distintamente.
+
+5.- Creamos un handler para la ruta protegida por nuestro jwt, con un try/cath hacemos la llamada a la api con axios:
+
+  const protectedHandler = async () => {
+    try {
+      const response = await axios.get(apiUrl + '/protected', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+Al hacer llamados a rutas protegidas por un jwt, debemos enviar el jwt en el header de la llamada.
+
+Si esta llamada se ejecuta correctamente, podemos imprimir la respuesta.
+
+En caso de devolver un error se puede imprimir o manejar distintamente.
+
+6.- Al momento de obtener nuestro JWT se puede almacenar en localstorage o solo memoria temporal.
+
+7.- Una vez almacenado se puede usar el hook useEffect para en cada render original revisar si hay un localstorage 
+que no nos demos cuenta, este token nos puede servir para cualquier ruta protegida mientras siga activo.
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+        setToken(token);
+        }
+    }, []);
+
+8.- Se generaron los elementos de la interfaz para poder probar el funcionamiento de la api usando useState y onChange para
+modificar los valores de cada input element.
