@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:5001';
+const apiUrl = 'http://localhost:5000';
 
 function App() {
   const [token, setToken] = useState(null);
