@@ -38,7 +38,7 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[1];
 
   if (token == 'null' || token == null || token === undefined)
-    res.status(401).json({ error: 'Token not included' });
+    return res.status(401).json({ error: 'Token not included' });
 
   jwt.verify(token, secretKey, (err, user) => {
     if (err) 
