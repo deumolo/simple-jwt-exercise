@@ -36,7 +36,31 @@ function App() {
     }
   };
 
-  return <></>;
+  return (
+    <>
+      <div>
+        {token && <p>Already signed in </p>}
+        <input
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <input
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </div>
+      <div>
+        <button onClick={loginHandler}>Login</button>
+      </div>
+      <div>
+        <button onClick={protectedHandler}>Protected</button>
+      </div>
+    </>
+  );
 }
 
 export default App;
