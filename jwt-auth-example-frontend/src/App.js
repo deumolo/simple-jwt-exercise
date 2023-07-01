@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:5001';
@@ -7,6 +7,11 @@ function App() {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    token ? setToken(token) : setToken(null);
+  }, [token]);
 
   const loginHandler = async () => {
     try {
@@ -17,6 +22,7 @@ function App() {
 
       const { token } = response.data;
       setToken(token);
+      localStorage.setItem('token', token);
     } catch (err) {
       console.log(err.response.data);
     }
