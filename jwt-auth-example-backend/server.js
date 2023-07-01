@@ -38,10 +38,10 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[1];
 
   if (token == 'null' || token == null || token === undefined)
-    return res.status(401).json({ error: 'Token not included' });
+    res.status(401).json({ error: 'Token not included' });
 
   jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) res.sendStatus(403);
     req.user = user;
     next();
   });
