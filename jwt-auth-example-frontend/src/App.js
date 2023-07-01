@@ -4,7 +4,6 @@ import axios from 'axios';
 const apiUrl = 'http://localhost:5001';
 
 function App() {
-  
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -18,6 +17,20 @@ function App() {
 
       const { token } = response.data;
       setToken(token);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const protectedHandler = async () => {
+    try {
+      const response = await axios.get(apiUrl + '/protected', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
     } catch (err) {
       console.log(err.response.data);
     }
